@@ -1,0 +1,51 @@
+.header {
+    background-color: #ab1235;
+    padding: 10px;
+    text-align: center;
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+}
+.header h2 {
+    margin: 0px;
+}
+
+::ng-deep .mat-dialog-container {
+    min-height: 416px;
+    min-width: 500px;
+    padding: 0px;
+    overflow: hidden;
+}
+
+.form-group input {
+    display: block;
+    padding: 5px;
+    width: 100%;
+    border: 1px solid grey;
+    cursor: default;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.save {
+    color: white !important;
+    background-color: #ab1235;
+    border: none;
+    padding: 0px 10px 3px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 98px;
+}
+
+.save:disabled {
+    opacity: 0.8;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

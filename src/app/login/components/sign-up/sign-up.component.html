@@ -1,0 +1,57 @@
+<div class="container">
+    <div class="signup-form">
+        <div class="header">
+            <h2>Registration</h2>
+        </div>
+        <form [formGroup]="signUpGroup">
+            <div class="form-group">
+                <label for="email">Name <span class="error-text">*</span></label>
+                <input formControlName="name" type="text" class="form-control" id="name" placeholder="Name">
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address <span class="error-text">*</span></label>
+                <input formControlName="email" type="email" class="form-control" id="email" placeholder="sani@example.com">
+                <small class="error-text" *ngIf="signUpGroup.get('email')?.errors?.['email']">Please enter a valid email address.</small>
+            </div>
+            <div class="form-group">
+                <label for="password">Password <span class="error-text">*</span></label>
+                <div class="input-group">
+                    <input formControlName="password" type="password" class="form-control" id="password" placeholder="Password">
+                    <div class="input-group-append">
+                        <span class="input-group-text" (click)="togglePasswordVisibility()">
+                            <i [ngClass]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                        </span>
+                    </div>
+                   
+                </div>
+                <small *ngIf="signUpGroup.get('password')?.hasError('pattern')" class="error-text">
+                    <!-- Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, and one digit. -->
+                    Please enter a valid password.
+                </small>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password <span class="error-text">*</span></label>
+                <div class="input-group">
+                    <input formControlName="confirmPassword" type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password">
+                    <div class="input-group-append">
+                        <span class="input-group-text" (click)="toggleConfirmPasswordVisibility()">
+                            <i [ngClass]="showConfirmPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                        </span>
+                    </div>
+                </div>
+                <small *ngIf="signUpGroup.get('confirmPassword')?.hasError('pattern')" class="error-text">
+                    Please enter a valid password.
+                </small>
+            </div>
+            <small *ngIf="signUpGroup.hasError('passwordMatch')"
+            id="email-help" class="form-text error-text">Passwords Don't Match</small>
+
+            <div style="margin-top: 10px;">
+                <button type="submit" class="btn btn-primary btn-submit" (click)="onSubmit()" [disabled]="signUpGroup.invalid">Sign Up</button>
+            </div>
+            <div class="login text-sm">
+                Already have an account ? <a routerLink="/">Login</a> here.
+            </div>
+        </form>
+    </div>
+</div>

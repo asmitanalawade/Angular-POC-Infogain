@@ -1,0 +1,17 @@
+<div class="container">
+    <div class="header">
+        <h2 mat-dialog-title>Confirmation</h2>
+    </div>
+    <div mat-dialog-content>
+        <div class="p-4">
+            <p>Do you really want to delete emplyee {{data.data.name}}?</p>
+        </div>
+    </div>
+    <div mat-dialog-actions class="flex justify-end !px-5">
+        <button mat-button class="bg-slate-200" (click)="onNoClick()">No</button>
+        <button mat-button [mat-dialog-close]="data.animal" class="save" (click)="onSave()" cdkFocusInitial>Yes</button>
+    </div>
+</div>
+
+
+

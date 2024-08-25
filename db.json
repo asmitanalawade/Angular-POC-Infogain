@@ -1,0 +1,81 @@
+{
+  "users": [
+    {
+      "id": "28e1",
+      "name": "Asmita",
+      "email": "asmita12@gmail.com",
+      "password": "Admin@123"
+    },
+    {
+      "id": "4f22",
+      "name": "Smita Nalawade",
+      "email": "smita27@gmail.com",
+      "password": "Smita@7676"
+    }
+  ],
+  "employees": [
+    {
+      "id": "a4bb",
+      "employeeId": "1",
+      "name": "Asmita Nalawade",
+      "designation": "Consultant Development",
+      "experience": "5.9"
+    },
+    {
+      "id": "aad1",
+      "employeeId": "2",
+      "name": "Ahmed Raja",
+      "designation": "Senior frontend developer",
+      "experience": "12"
+    },
+    {
+      "id": "0418",
+      "employeeId": "3",
+      "name": "Arnab Ghosh",
+      "designation": "Project Manager",
+      "experience": "14"
+    },
+    {
+      "id": "52b2",
+      "employeeId": "4",
+      "name": "Bishwabandita Rout",
+      "designation": "Frontend  Developer",
+      "experience": "5"
+    },
+    {
+      "id": "1ebe",
+      "employeeId": "6",
+      "name": "Kajal Mhatre",
+      "designation": "Senior consultant Developer",
+      "experience": "7"
+    },
+    {
+      "id": "1a85",
+      "employeeId": "7",
+      "name": "Anukriti",
+      "designation": "consultant UI",
+      "experience": "7"
+    },
+    {
+      "id": "13ad",
+      "employeeId": "8",
+      "name": "Vikram Pande",
+      "designation": "Engineer",
+      "experience": "2"
+    },
+    {
+      "id": "1a78",
+      "employeeId": "9",
+      "name": "deva roy",
+      "designation": "Manager",
+      "experience": "20"
+    },
+    {
+      "id": "c643",
+      "employeeId": "1",
+      "name": "smita",
+      "designation": "ghgh",
+      "experience": "7"
+    }
+  ]
+}
