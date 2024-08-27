@@ -49,7 +49,7 @@ export class EmployeeTableComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(AddEmployeeComponent, {
       width: '250px',
-      data: {},
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -61,6 +61,7 @@ export class EmployeeTableComponent implements OnInit {
     const dialogRef = this.dialog.open(EditEmployeeComponent, {
       width: '250px',
       data: {data: row},
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -72,6 +73,7 @@ export class EmployeeTableComponent implements OnInit {
     const dialogRef = this.dialog.open(DeleteEmployeeComponent, {
       width: '250px',
       data: {data: row},
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {

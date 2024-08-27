@@ -19,7 +19,7 @@ export class EditEmployeeComponent implements OnInit {
     this.emplyeeForm = this.fb.group({
          id: [null],
         employeeId: [{value: '', disabled: true}],
-        name: ['', Validators.required],
+        name: [{value: '', disabled: true}, Validators.required],
         designation: [''],
         experience: ['', [Validators.pattern(/^\d+(\.\d+)?$/)]]
     });
@@ -32,6 +32,7 @@ export class EditEmployeeComponent implements OnInit {
 
   onSave() {
     this.emplyeeForm.get('employeeId')?.enable();
+    this.emplyeeForm.get('name')?.enable();
     if(this.emplyeeForm.valid) {
       this.service.updateEmployee(this.emplyeeForm.value).subscribe(res => {
         alert('Employee added successfully!!');

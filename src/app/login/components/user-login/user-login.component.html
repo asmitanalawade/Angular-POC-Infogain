@@ -17,9 +17,6 @@
                 <small *ngIf="loginForm.get('password')?.hasError('pattern')" class="error-text">
                     Please enter a valid password.
                 </small>
-                <!-- <div class="text-right text-xs forget-pass">
-                    <a routerLink="/forget-password">Change Password</a>
-                </div> -->
             </div>
             <p class="error-text text-xs">{{errorMessage}}</p>
             <div style="margin-top: 10px;">

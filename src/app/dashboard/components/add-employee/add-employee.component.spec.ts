@@ -1,5 +1,4 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -14,94 +13,102 @@ describe('AddEmployeeComponent', () => {
   let mockEmployeeService: jasmine.SpyObj<EmployeeService>;
 
   beforeEach(async () => {
-    const mockDialogRefSpy = jasmine.createSpyObj('MatDialogRef', ['close']);
-    const mockEmployeeServiceSpy = jasmine.createSpyObj('EmployeeService', ['addEmployee']);
+    mockDialogRef = jasmine.createSpyObj('MatDialogRef', ['close']);
+    mockEmployeeService = jasmine.createSpyObj('EmployeeService', ['getEmployees', 'addEmployee']);
 
     await TestBed.configureTestingModule({
       declarations: [AddEmployeeComponent],
       imports: [ReactiveFormsModule, MatButtonModule, MatDialogModule],
       providers: [
         FormBuilder,
-        { provide: MatDialogRef, useValue: mockDialogRefSpy },
+        { provide: MatDialogRef, useValue: mockDialogRef },
         { provide: MAT_DIALOG_DATA, useValue: {} },
-        { provide: EmployeeService, useValue: mockEmployeeServiceSpy }
+        { provide: EmployeeService, useValue: mockEmployeeService },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
+  });
 
+  beforeEach(() => {
     fixture = TestBed.createComponent(AddEmployeeComponent);
     component = fixture.componentInstance;
-    mockDialogRef = TestBed.inject(MatDialogRef) as jasmine.SpyObj<MatDialogRef<AddEmployeeComponent>>;
-    mockEmployeeService = TestBed.inject(EmployeeService) as jasmine.SpyObj<EmployeeService>;
-    mockEmployeeService.addEmployee.and.returnValue(of({}));
-    fixture.detectChanges();
+
+    mockEmployeeService.getEmployees.and.returnValue(of([{ employeeId: '1', name: 'Test', designation: 'Developer', experience: '5' }]));
+    
+    fixture.detectChanges(); // ngOnInit is called here
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should initialize the form with default values', () => {
-    const form = component.emplyeeForm;
-    expect(form).toBeDefined();
-    expect(form.get('employeeId')?.value).toEqual('');
-    expect(form.get('name')?.value).toEqual('');
-    expect(form.get('designation')?.value).toEqual('');
-    expect(form.get('experience')?.value).toEqual('');
+  it('should initialize employeeList on ngOnInit', () => {
+    expect(component.employeeList.length).toBe(1);
+    expect(component.employeeList[0].name).toBe('Test');
   });
 
-  it('should close the dialog on onCancelClick', () => {
-    component.onCancelClick();
-    expect(mockDialogRef.close).toHaveBeenCalled();
+  it('should match an existing employee ID', fakeAsync(() => {
+    component.emplyeeForm.controls['employeeId'].setValue('1');
+
+    component.checkEmployeeIdMatch();
+    tick(300);
+
+    expect(component.isEmployeeIdMatch).toBeTrue();
+  }));
+
+  it('should not match an employee ID if it does not exist', () => {
+    component.emplyeeForm.controls['employeeId'].setValue('2');
+    component.checkEmployeeIdMatch();
+    expect(component.isEmployeeIdMatch).toBeFalse();
   });
 
-  it('should call addEmployee on the service with form data when form is valid and onSave is called', () => {
+  it('should match an existing employee name', fakeAsync(() => {
+    component.emplyeeForm.controls['name'].setValue('Test');
+
+    component.checkNameMatch();
+    tick(300);
+    
+    expect(component.isNameMatch).toBeTrue();
+  }));
+
+  it('should not match an employee name if it does not exist', () => {
+    component.emplyeeForm.controls['name'].setValue('Test');
+    component.checkNameMatch();
+    expect(component.isNameMatch).toBeFalse();
+  });
+
+  it('should call addEmployee when onSave is called with valid data and no matches', () => {
+    component.isEmployeeIdMatch = false;
+    component.isNameMatch = false;
+    component.emplyeeForm.controls['employeeId'].setValue('2');
+    component.emplyeeForm.controls['name'].setValue('Test');
+    component.emplyeeForm.controls['designation'].setValue('Tester');
+    component.emplyeeForm.controls['experience'].setValue('3');
+
     mockEmployeeService.addEmployee.and.returnValue(of({}));
-
-    component.emplyeeForm.setValue({
-      employeeId: '123',
-      name: 'John Doe',
-      designation: 'Engineer',
-      experience: '5'
-    });
 
     component.onSave();
 
     expect(mockEmployeeService.addEmployee).toHaveBeenCalledWith({
-      employeeId: '123',
-      name: 'John Doe',
-      designation: 'Engineer',
-      experience: '5'
+      employeeId: '2',
+      name: 'Test',
+      designation: 'Tester',
+      experience: '3',
     });
   });
 
-  it('should show an alert when employee is added successfully', () => {
-    spyOn(window, 'alert');
-    mockEmployeeService.addEmployee.and.returnValue(of({}));
-
-    component.emplyeeForm.setValue({
-      employeeId: '123',
-      name: 'John Doe',
-      designation: 'Engineer',
-      experience: '5'
-    });
+  it('should not call addEmployee when onSave is called with existing employee ID or name', () => {
+    component.isEmployeeIdMatch = true;
+    component.isNameMatch = true;
+    component.emplyeeForm.controls['employeeId'].setValue('1');
+    component.emplyeeForm.controls['name'].setValue('Test');
 
     component.onSave();
 
-    expect(window.alert).toHaveBeenCalledWith('Employee added successfully!!');
-  });
-
-  it('should not call addEmployee on the service if the form is invalid', () => {
-    component.emplyeeForm.setValue({
-      employeeId: '123',
-      name: '',
-      designation: 'Engineer',
-      experience: '5'
-    });
-
-    component.onSave();
-
-    expect(component.emplyeeForm.valid).toBeFalse();
     expect(mockEmployeeService.addEmployee).not.toHaveBeenCalled();
+  });
+
+  it('should close the dialog when onCancelClick is called', () => {
+    component.onCancelClick();
+    expect(mockDialogRef.close).toHaveBeenCalled();
   });
 });

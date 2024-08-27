@@ -51,8 +51,8 @@ describe('EmployeeTableComponent', () => {
 
   it('should fetch and populate the employee list on initialization', () => {
     const mockEmployeeList = [
-      { id: '1', employeeId: '1', name: 'John Doe', designation: 'Developer', experience: '3 years' },
-      { id: '2', employeeId: '2', name: 'Jane Doe', designation: 'Designer', experience: '5 years' }
+      { id: '1', employeeId: '1', name: 'Admin', designation: 'Developer', experience: '3 years' },
+      { id: '2', employeeId: '2', name: 'Test', designation: 'Designer', experience: '5 years' }
     ];
 
     mockEmployeeService.getEmployees.and.returnValue(of(mockEmployeeList));
@@ -75,7 +75,7 @@ describe('EmployeeTableComponent', () => {
   });
 
   it('should open EditEmployeeComponent dialog on editEmployee()', () => {
-    const mockRowData = { id: '1', employeeId: '1', name: 'John Doe', designation: 'Developer', experience: '3 years' };
+    const mockRowData = { id: '1', employeeId: '1', name: 'Admin', designation: 'Developer', experience: '3 years' };
     const dialogRefSpy = jasmine.createSpyObj({ afterClosed: of(true) });
     mockDialog.open.and.returnValue(dialogRefSpy);
 
@@ -85,7 +85,7 @@ describe('EmployeeTableComponent', () => {
   });
 
   it('should open DeleteEmployeeComponent dialog on deleteEmployee()', () => {
-    const mockRowData = { id: '1', employeeId: '1', name: 'John Doe', designation: 'Developer', experience: '3 years' };
+    const mockRowData = { id: '1', employeeId: '1', name: 'Test', designation: 'Developer', experience: '3 years' };
     const dialogRefSpy = jasmine.createSpyObj({ afterClosed: of(true) });
     mockDialog.open.and.returnValue(dialogRefSpy);
 

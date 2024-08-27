@@ -11,7 +11,7 @@ describe('DeleteEmployeeComponent', () => {
   let mockDialogRef: jasmine.SpyObj<MatDialogRef<DeleteEmployeeComponent>>;
   let mockEmployeeService: jasmine.SpyObj<EmployeeService>;
   
-  const mockData = { data: { id: '1', name: 'John Doe' } };
+  const mockData = { data: { id: "1", employeeId: "1", name: "smita", designation: "ghgh", experience: "7" } };
 
   beforeEach(async () => {
     mockDialogRef = jasmine.createSpyObj('MatDialogRef', ['close']);
